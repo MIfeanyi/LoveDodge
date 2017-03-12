@@ -10,8 +10,10 @@ function addPU()
         x=-64,
         y=math.random(0,love.graphics.getHeight()-var.sy),
         h=64,w=64,
+        alive = true,
         id="powerup"
     }
+    addObject(newPU)
     table.insert(powerups,newPU)
 end
 
@@ -24,9 +26,11 @@ function updatePU(dt)
     for i, p in ipairs(powerups) do
         p.x = p.x + var.sx*dt
         p.y = p.y + var.sy*dt
-        if p.y > love.graphics.getHeight() then
+        if p.y > love.graphics.getHeight() or not p.alive then
+            removeObject(p)
             table.remove(powerups,i)
         end
+        p.x,p.y = move(p)
     end
 end
 

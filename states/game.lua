@@ -7,9 +7,9 @@ require 'bases'
 require 'pu'
 
 physics = {
-    velocity = 45, gravity = 100,
+    velocity = 45, gravity = 200,
     floor = {
-        x=0,y=love.graphics.getHeight(),h=32,w=32
+        x=0,y=love.graphics.getHeight()-50,h=32,w=love.graphics.getWidth()
     },
     decay = 5}
 
@@ -54,7 +54,7 @@ function state:update(dt)
 	player:update(dt)
     updateBullet(dt)
     updatePU(dt)
-    updateWorld(dt)
+    --updateWorld(dt)
     if love.keyboard.isDown('w') then
         player.y = player.y - (physics.velocity*4*dt)
         player.current = "jump"
@@ -101,7 +101,7 @@ function state:update(dt)
     if player.y > love.graphics.getHeight() + 32 then 
         player.y = love.graphics.getHeight()
     end 
-    move(player)
+    player.x, player.y=playerCollisions(move(player))
 end
 
 function state:draw()
