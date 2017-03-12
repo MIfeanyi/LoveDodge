@@ -5,7 +5,7 @@ local world = bump.newWorld()
 
 function filter(item,other)
   if item.id == "bullet" and other.id =="bullet"  then
-    return 'cross'
+    return 'bounce'
   end
   if item.id == "bullet" and other.id=="player" then
     return 'bounce'
@@ -18,7 +18,11 @@ function addObject(obj)
 end
 
 function removeObject(obj)
-  world:remove(obj)
+  if world:hasItem(obj) then
+    world:remove(obj)
+  else
+    print("Already removed")
+  end
 end
 function move(obj)
   return world:move(obj,obj.x,obj.y,filter)

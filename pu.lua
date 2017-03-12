@@ -16,6 +16,15 @@ function addPU()
     addObject(newPU)
     table.insert(powerups,newPU)
 end
+function puCollisions(actualX, actualY, cols, len)
+    for i=1,len do -- If more than one simultaneous collision, they are sorted out by proximity
+        local col = cols[i]
+        if col.other.id =="player" then
+            col.item.alive = false
+        end
+    end
+    return actualX,actualY
+end
 
 function updatePU(dt)
     var.current = var.current+dt
@@ -26,11 +35,11 @@ function updatePU(dt)
     for i, p in ipairs(powerups) do
         p.x = p.x + var.sx*dt
         p.y = p.y + var.sy*dt
+        p.x,p.y = puCollisions(move(p))
         if p.y > love.graphics.getHeight() or not p.alive then
             removeObject(p)
             table.remove(powerups,i)
         end
-        p.x,p.y = move(p)
     end
 end
 

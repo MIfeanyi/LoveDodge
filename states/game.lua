@@ -7,9 +7,9 @@ require 'bases'
 require 'pu'
 
 physics = {
-    velocity = 45, gravity = 200,
+    velocity = 45, gravity = 200,jump =300,
     floor = {
-        x=0,y=love.graphics.getHeight()-50,h=32,w=love.graphics.getWidth()
+        x=0,y=love.graphics.getHeight()-50,h=32,w=love.graphics.getWidth(),id="floor"
     },
     decay = 5}
 
@@ -96,7 +96,7 @@ function state:update(dt)
     --if player.vx < 0 and player.vx < 0.5 then end
 
     player.x = player.x + player.vx
-    player.y = player.y + (physics.velocity-physics.decay)*dt
+    player.y = player.y + (physics.jump-physics.decay)*dt
 
     if player.y > love.graphics.getHeight() + 32 then 
         player.y = love.graphics.getHeight()
@@ -115,6 +115,9 @@ function state:draw()
     drawBullet()
     drawPU()
     love.graphics.draw(getImage("ui-mouse"),love.mouse.getX()-32,love.mouse.getY()-32)
+    if  player.alive ==false then
+        love.graphics.print("DEAD",0,200)
+    end
 end
 
 function state:keypressed(key, unicode)
