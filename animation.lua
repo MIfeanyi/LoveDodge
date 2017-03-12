@@ -1,7 +1,6 @@
 require 'image'
 local animate = require 'lib.anim8'
 
-
 animations = {}
 function addAnimation(h,w,frames,id,speed)
   local g = animate.newGrid(h,w,getImage(id):getWidth(),h)
