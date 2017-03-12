@@ -15,6 +15,7 @@ function state:new()
 end
 
 function state:load()
+    addImage("/gfx/blast.png","blast")
     addImage("/gfx/icon.png","ui-mouse")
     addImage("/gfx/gun.png","ui-gun")
     addImage("/gfx/love.png","love")
@@ -44,7 +45,7 @@ function state:disable()
 end
 
 function state:update(dt)
-	player:updateAnim8(dt)
+	player:update(dt)
     updateBullet(dt)
     if love.keyboard.isDown('w') then
         player.y = player.y - (physics.velocity*4*dt)
@@ -98,7 +99,7 @@ function state:draw()
     --love.graphics.setColor(20,20,20)
     love.graphics.rectangle("fill",0,0,love.graphics.getWidth(),40)
     love.graphics.draw(getImage("bgd"))
-    love.graphics.draw(getImage("ui-gun"),love.graphics.getWidth()-32,0)
+    love.graphics.draw(getImage("ui-gun"),love.graphics.getWidth()-64,0)
     drawBases()
 	player:draw()
     drawBullet()
@@ -117,6 +118,7 @@ end
 
 function state:mousereleased(x, y, button)
     if button == 1 then
+        player:addBullet(x,y)
     end
 end
 
