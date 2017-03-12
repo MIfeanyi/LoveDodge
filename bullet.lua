@@ -31,8 +31,9 @@ function updateBullet(dt)
     for i, b in ipairs(bullets) do
         b.x = b.x + b.sx*dt
         b.y = b.y + b.sy*dt
+        b.x,b.y=move(b)
         if b.y > love.graphics.getHeight()+32 or not b.alive then
-            --removeObject(b) --review bump.lua
+            removeObject(b) --review bump.lua
             table.remove(bullets, i)
         end
     end
