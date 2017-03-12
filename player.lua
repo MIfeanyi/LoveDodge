@@ -4,7 +4,8 @@ player= {
     animations = {},
     current = "jump", direction = "right",
     x=0,y=0,h=16,w=16,vx=0,vy=0,
-    bulletSpd=20
+    bulletSpd=20,
+    id ="player"
 }
 
 local bullets = {}
@@ -69,4 +70,25 @@ function player:addBullet(x,y)
         bTimer.canShoot = false
         bTimer.current = 0
     end
+end
+
+function playerCollisions(actualX, actualY, cols, len)
+  if len > 0 then
+    print(("Attempted to move  but ended up in %d,%d due to %d collisions"):format(actualX, actualY, len))
+  else
+    --print("Moved player to (",actualX,",",actualY, ") no issues.")
+  end
+  for i=1,len do -- If more than one simultaneous collision, they are sorted out by proximity
+    local col = cols[i]
+    print(("Collision with %s."):format(col.other.id))
+    if col.other.id == "bullet" then
+        player.alive = false
+        col.other.alive = false
+    end
+    if col.other.id == "powerup" then
+        col.other.alive = false
+        --turn on powerup
+    end
+  end
+  return actualX, actualY
 end
