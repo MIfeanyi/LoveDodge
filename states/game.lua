@@ -1,20 +1,24 @@
 local state = {}
+require 'world'
 require 'animation'
 require 'player'
 require 'bullet'
 require 'bases'
+require 'pu'
 
-local bump = require "lib.bump"
-
-local word = bump.newWorld()
-
-physics = {velocity = 45, gravity = 100, floor = {x,y,h,w}, decay = 5}
+physics = {
+    velocity = 45, gravity = 100,
+    floor = {
+        x=0,y=love.graphics.getHeight(),h=32,w=32
+    },
+    decay = 5}
 
 function state:new()
 	return lovelyMoon.new(self)
 end
 
 function state:load()
+    addImage("/gfx/powerup.png","powerup")
     addImage("/gfx/blast.png","blast")
     addImage("/gfx/icon.png","ui-mouse")
     addImage("/gfx/gun.png","ui-gun")
@@ -29,6 +33,8 @@ function state:load()
     player:addAnimation(addAnimation(32,32,'1-2',"stand",1.5))
     player:addAnimation(addAnimation(32,32,'1-2',"jump",.3))
     player:addAnimation(addAnimation(32,32,'1-6',"walk",.3))
+    addObject(physics.floor)
+    addObject(player)
     addBase(0,542)
 end
 
@@ -47,6 +53,8 @@ end
 function state:update(dt)
 	player:update(dt)
     updateBullet(dt)
+    updatePU(dt)
+    updateWorld(dt)
     if love.keyboard.isDown('w') then
         player.y = player.y - (physics.velocity*4*dt)
         player.current = "jump"
@@ -93,16 +101,19 @@ function state:update(dt)
     if player.y > love.graphics.getHeight() + 32 then 
         player.y = love.graphics.getHeight()
     end 
+    move(player)
 end
 
 function state:draw()
     --love.graphics.setColor(20,20,20)
     love.graphics.rectangle("fill",0,0,love.graphics.getWidth(),40)
+    --love.graphics.setColor(255,255,255)
     love.graphics.draw(getImage("bgd"))
     love.graphics.draw(getImage("ui-gun"),love.graphics.getWidth()-64,0)
     drawBases()
 	player:draw()
     drawBullet()
+    drawPU()
     love.graphics.draw(getImage("ui-mouse"),love.mouse.getX()-32,love.mouse.getY()-32)
 end
 
