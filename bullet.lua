@@ -1,7 +1,7 @@
 --bullet
 
 local bullets = {}
-local bTimer = {max=2,current=0,started=true,wave=1}
+local bTimer = {max=2,current=0,started=true,wave=1,maxWave=4}
 function addBullet()
     newB = {x=math.random(0,love.graphics.getWidth()),
     y=-32,
@@ -17,6 +17,9 @@ function updateBullet(dt)
         if bTimer.current > bTimer.max then
             bTimer.current = 0
             bTimer.wave = bTimer.wave + 1
+            if bTimer.wave > bTimer.maxWave then
+                bTimer.wave = 1
+            end
             for i=1, 5*bTimer.wave,1 do
                 addBullet()
             end
