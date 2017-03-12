@@ -3,11 +3,14 @@
 local bullets = {}
 local bTimer = {max=2,current=0,started=true,wave=1,maxWave=4}
 function addBullet()
-    newB = {x=math.random(0,love.graphics.getWidth()),
+    newB = {
+    id="bullet",
+    x=math.random(0,love.graphics.getWidth()),
     y=-32,
     h=16,w=16,
     sx=math.random(0,100),
     sy=math.random(100,300),alive=true}
+    addObject(newB)
     table.insert(bullets,newB)
 end
 
@@ -28,7 +31,8 @@ function updateBullet(dt)
     for i, b in ipairs(bullets) do
         b.x = b.x + b.sx*dt
         b.y = b.y + b.sy*dt
-        if b.y > love.graphics.getHeight()+32 then
+        if b.y > love.graphics.getHeight()+32 or not b.alive then
+            --removeObject(b) --review bump.lua
             table.remove(bullets, i)
         end
     end
