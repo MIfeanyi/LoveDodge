@@ -3,8 +3,11 @@ local var = {
     sx = 200,
     sy = 100,
     current =0,
-    max = 05
+    max = 05,
+    points =100
 }
+
+
 function addPU()
     newPU = {
         x=-64,
@@ -21,6 +24,8 @@ function puCollisions(actualX, actualY, cols, len)
         local col = cols[i]
         if col.other.id =="player" then
             col.item.alive = false
+            player.pu = true
+            score.points = score.points+var.points
         end
     end
     return actualX,actualY
