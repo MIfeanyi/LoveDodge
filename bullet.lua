@@ -22,10 +22,12 @@ function bulletCollision(actualX, actualY, cols, len)
             col.item.alive = false
             score:add()
         end
-        if col.other.id =="floor" then
+        if col.other.id =="floor" or col.item.id=="floor" then
+            col.item.alive = false
             health:damage()
         end
     end
+    return actualX, actualY
 end
 
 function updateBullet(dt)
@@ -46,10 +48,12 @@ function updateBullet(dt)
         b.life = b.life + dt
         b.x = b.x + b.sx*dt
         b.y = b.y + b.sy*dt
-        b.x,b.y=move(b)
-        if b.y > love.graphics.getHeight()+32 or not b.alive or b.life > bTimer.life then
-            removeObject(b) --review bump.lua
-            table.remove(bullets, i)
+        b.x,b.y=bulletCollision(move(b))
+        if b ~= nil then
+            if b.y > love.graphics.getHeight()+32 or not b.alive or b.life > bTimer.life then
+                removeObject(b) --review bump.lua
+                table.remove(bullets, i)
+            end
         end
     end
 end
