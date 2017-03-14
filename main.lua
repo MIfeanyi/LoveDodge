@@ -1,4 +1,4 @@
---Source code under MIT License
+--Source code under GPL 3.0 License
 --Copyright 2017 Michael Redford
 
 class = require 'lib.30log'
