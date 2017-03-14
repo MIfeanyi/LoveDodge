@@ -1,6 +1,7 @@
 local state = {}
 require 'score'
 require 'world'
+require 'button'
 require 'animation'
 require 'player'
 require 'bullet'
