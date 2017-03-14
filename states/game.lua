@@ -20,6 +20,9 @@ function state:new()
 end
 
 function state:load()
+    addImage("/gfx/button.png","button")
+    restartB =  button:new() restartB:load(200,love.graphics.getHeight()*.75,"restart","button")
+    exitB = button:new() exitB:load(0,love.graphics.getHeight()*.75,"exit","button")
     addImage("/gfx/uibackground.png","uiback")
     addImage("/gfx/powerup.png","powerup")
     addImage("/gfx/blast.png","blast")
@@ -101,10 +104,10 @@ function state:update(dt)
         player.x = player.x + player.vx
         player.y = player.y + (physics.gravity-physics.decay)*dt
 
-        if player.x > love.graphics.getWidth() - player.w then
+        if player.x > love.graphics.getWidth() - player.w then 
             player.x = love.graphics.getWidth() - player.w
         end
-        if player.x < 1 then
+        if player.x < 1 then 
             player.x = 1
         end
 
@@ -116,6 +119,14 @@ function state:update(dt)
         player.x, player.y=playerCollisions(move(player))
     else
         --game over
+        if restartB:clicked() then
+        lovelyMoon.switchState("game", "game") -- direct back to the menu
+            --reload
+        end
+        if exitB:clicked() then
+            love.event.quit()
+            --exit
+        end
     end
 end
 
@@ -137,11 +148,12 @@ function state:draw()
     end
     health:draw()
     if  player.alive ==false or health.curH <= 0 then
-        love.graphics.print("DEAD",0,200)
         love.graphics.setColor(20,20,20)
         love.graphics.rectangle("fill",0,love.graphics.getHeight()/2,love.graphics.getWidth(),200)
         love.graphics.setColor(255,255,255,255)    
-        love.graphics.print("DEAD",0,200)
+        love.graphics.print("DEAD",0,love.graphics.getHeight()*.60)
+        restartB:draw()
+        exitB:draw()
     end
     love.graphics.draw(getImage("ui-mouse"),love.mouse.getX()-32,love.mouse.getY()-32)
 end
