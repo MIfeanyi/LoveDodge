@@ -22,7 +22,7 @@ end
 function puCollisions(actualX, actualY, cols, len)
     for i=1,len do -- If more than one simultaneous collision, they are sorted out by proximity
         local col = cols[i]
-        if col.other.id =="player" then
+        if col.other.id =="player" or col.other.id=="blaster" then
             col.item.alive = false
             player.pu = true
             score.points = score.points+var.points
