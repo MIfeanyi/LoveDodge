@@ -120,7 +120,7 @@ function state:update(dt)
     else
         --game over
         if restartB:clicked() then
-        lovelyMoon.switchState("game", "game") -- direct back to the menu
+        lovelyMoon.switchState("game", "menu") -- direct back to the menu
             --reload
         end
         if exitB:clicked() then

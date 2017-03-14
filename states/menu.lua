@@ -1,11 +1,17 @@
 local state = {}
 
+require 'image'
+require 'button'
+
 function state:new()
 	return lovelyMoon.new(self)
 end
 
 function state:load()
-	
+	addImage("/gfx/button.png","button")
+	addImage("/gfx/menu/Lief.png","lief")
+	playB = button:new() playB:load(love.graphics.getWidth()*.6,love.graphics.getHeight()*.6,"Play","button")
+	exitB = button:new() exitB:load(love.graphics.getWidth()*.6,love.graphics.getHeight()*.7,"Exit","button")
 end
 
 function state:close()
@@ -25,7 +31,9 @@ function state:update(dt)
 end
 
 function state:draw()
-	
+	love.graphics.draw(getImage("lief"),love.graphics.getWidth()*.75,100)
+	playB:draw()
+	exitB:draw()
 end
 
 function state:keypressed(key, unicode)
