@@ -4,6 +4,9 @@ local bump = require "lib.bump"
 local world = bump.newWorld()
 
 function filter(item,other)
+  if item.id=="blaster" or other.id=="blaster" then
+    return 'cross'
+  end
   if item.id == "bullet" and other.id =="bullet"  then
     return 'cross'
   end

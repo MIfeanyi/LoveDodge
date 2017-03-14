@@ -22,6 +22,9 @@ function bulletCollision(actualX, actualY, cols, len)
             col.item.alive = false
             score:add()
         end
+        if col.other.id =="floor" then
+            health:damage()
+        end
     end
 end
 

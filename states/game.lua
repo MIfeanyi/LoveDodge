@@ -1,4 +1,5 @@
 local state = {}
+require 'score'
 require 'world'
 require 'animation'
 require 'player'
@@ -7,7 +8,7 @@ require 'bases'
 require 'pu'
 
 physics = {
-    velocity = 45, gravity = 200,jump =300,
+    velocity = 45, gravity = 100,jump =300,
     floor = {
         x=0,y=love.graphics.getHeight()-50,h=32,w=love.graphics.getWidth(),id="floor"
     },
@@ -18,6 +19,7 @@ function state:new()
 end
 
 function state:load()
+    addImage("/gfx/uibackground.png","uiback")
     addImage("/gfx/powerup.png","powerup")
     addImage("/gfx/blast.png","blast")
     addImage("/gfx/icon.png","ui-mouse")
@@ -35,7 +37,6 @@ function state:load()
     player:addAnimation(addAnimation(32,32,'1-6',"walk",.3))
     addObject(physics.floor)
     addObject(player)
-    addBase(0,542)
 end
 
 function state:close()
@@ -96,11 +97,20 @@ function state:update(dt)
     --if player.vx < 0 and player.vx < 0.5 then end
 
     player.x = player.x + player.vx
-    player.y = player.y + (physics.jump-physics.decay)*dt
+    player.y = player.y + (physics.gravity-physics.decay)*dt
 
-    if player.y > love.graphics.getHeight() + 32 then 
+    if player.x > love.graphics.getWidth() - player.w then 
+        player.x = love.graphics.getWidth()
+    end
+    if player.x < 1 then
+        player.x = 1
+    end
+
+    if player.y > love.graphics.getHeight() - player.h then 
+        if player.y > love.graphics.getHeight() then
+        end
         player.y = love.graphics.getHeight()
-    end 
+    end
     player.x, player.y=playerCollisions(move(player))
 end
 
@@ -109,14 +119,21 @@ function state:draw()
     love.graphics.rectangle("fill",0,0,love.graphics.getWidth(),40)
     --love.graphics.setColor(255,255,255)
     love.graphics.draw(getImage("bgd"))
-    love.graphics.draw(getImage("ui-gun"),love.graphics.getWidth()-64,0)
     drawBases()
 	player:draw()
     drawBullet()
     drawPU()
+    love.graphics.draw(getImage("uiback"),0,0)
+    love.graphics.draw(getImage("ui-gun"),love.graphics.getWidth()-64,0)
+    love.graphics.print("Score:",0,0)
+    love.graphics.print(score.points,80,0)
+    health:draw()
     love.graphics.draw(getImage("ui-mouse"),love.mouse.getX()-32,love.mouse.getY()-32)
     if  player.alive ==false then
         love.graphics.print("DEAD",0,200)
+    end
+    if player.pu == true then
+        love.graphics.draw(getImage("powerup"),love.graphics.getWidth()-64*2,16)
     end
 end
 
@@ -127,13 +144,12 @@ function state:keyreleased(key, unicode)
 end
 
 function state:mousepressed(x, y, button)
-
-end
-
-function state:mousereleased(x, y, button)
     if button == 1 then
         player:addBullet(x,y)
     end
+end
+
+function state:mousereleased(x, y, button)
 end
 
 return state

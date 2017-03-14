@@ -3,14 +3,14 @@ player= {
     state = {walk=true, idle=false,stand=false,jump=false},
     animations = {},
     current = "jump", direction = "right",
-    x=0,y=0,h=16,w=16,vx=0,vy=0,
+    x=0,y=0,h=32,w=32,vx=0,vy=0,
     bulletSpd=20,
     id ="player",
     pu = false
 }
 
 local bullets = {}
-local bTimer = {max=1,current=0,canShoot=true,maxLife=5}
+local bTimer = {max=.5,current=0,canShoot=true,maxLife=5}
 
 function player:addAnimation(animation)
     a = animation
@@ -30,7 +30,7 @@ function player:update(dt)
         b.life = b.life + dt
         b.x = b.x + (b.sx+self.bulletSpd)*dt
         b.y = b.y + (b.sy+self.bulletSpd)*dt
-        move(b)
+        b.x,b.y = playerCollisions(move(b))
         if b.life > bTimer.maxLife then
             table.remove(bullets,i)
         end
@@ -84,7 +84,13 @@ function playerCollisions(actualX, actualY, cols, len)
   end
   for i=1,len do -- If more than one simultaneous collision, they are sorted out by proximity
     local col = cols[i]
-    print(("Collision with %s."):format(col.other.id))
+    if col.item.id=="blaster" then
+        if col.other.id=="bullet" then
+            col.other.alive = false
+            score:add()
+        end
+    end
+    --print(("Collision with %s."):format(col.other.id))
     if col.other.id == "bullet" then
         player.alive = false
         col.other.alive = false

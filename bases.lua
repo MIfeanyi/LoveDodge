@@ -1,7 +1,12 @@
 --bases
+--[[
+    rewrite to change end goal.
+]]
+bases ={
+    currentH=5000,
+    maxH= 1000
+}
 
-local bases ={}
-baseC = 0
 
 function addBase(x,y)
     newBase = {x=x,y=y,h,w,alive=true}
