@@ -5,7 +5,8 @@ player= {
     current = "jump", direction = "right",
     x=0,y=0,h=16,w=16,vx=0,vy=0,
     bulletSpd=20,
-    id ="player"
+    id ="player",
+    pu = false
 }
 
 local bullets = {}
@@ -29,6 +30,7 @@ function player:update(dt)
         b.life = b.life + dt
         b.x = b.x + (b.sx+self.bulletSpd)*dt
         b.y = b.y + (b.sy+self.bulletSpd)*dt
+        move(b)
         if b.life > bTimer.maxLife then
             table.remove(bullets,i)
         end
@@ -65,7 +67,9 @@ function player:addBullet(x,y)
         h=16,w=16,
         sx= (x-self.x),
         sy= (y-self.y),
+        id="blaster",
         life=0}
+        addObject(newB)
         table.insert(bullets,newB)
         bTimer.canShoot = false
         bTimer.current = 0
@@ -87,6 +91,7 @@ function playerCollisions(actualX, actualY, cols, len)
     end
     if col.other.id == "powerup" then
         col.other.alive = false
+        player.pu = true
         --turn on powerup
     end
   end
