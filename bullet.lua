@@ -1,7 +1,7 @@
 --bullet
 
 local bullets = {}
-local bTimer = {max=2,current=0,started=true,wave=1,maxWave=4}
+local bTimer = {max=2,current=0,started=true,wave=1,maxWave=4, life=5}
 function addBullet()
     newB = {
     id="bullet",
@@ -9,9 +9,20 @@ function addBullet()
     y=-32,
     h=16,w=16,
     sx=math.random(0,100),
-    sy=math.random(100,300),alive=true}
+    sy=math.random(100,300),
+    life=0,alive=true}
     addObject(newB)
     table.insert(bullets,newB)
+end
+
+function bulletCollision(actualX, actualY, cols, len)
+    for i=1,len do -- If more than one simultaneous collision, they are sorted out by proximity
+        local col = cols[i]
+        if col.other.id =="player" or col.other.id =="blaster" then
+            col.item.alive = false
+            score:add()
+        end
+    end
 end
 
 function updateBullet(dt)
@@ -29,10 +40,11 @@ function updateBullet(dt)
         end
     end
     for i, b in ipairs(bullets) do
+        b.life = b.life + dt
         b.x = b.x + b.sx*dt
         b.y = b.y + b.sy*dt
         b.x,b.y=move(b)
-        if b.y > love.graphics.getHeight()+32 or not b.alive then
+        if b.y > love.graphics.getHeight()+32 or not b.alive or b.life > bTimer.life then
             removeObject(b) --review bump.lua
             table.remove(bullets, i)
         end
