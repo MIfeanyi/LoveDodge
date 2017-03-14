@@ -10,8 +10,8 @@ end
 function state:load()
 	addImage("/gfx/button.png","button")
 	addImage("/gfx/menu/Lief.png","lief")
-	playB = button:new() playB:load(love.graphics.getWidth()*.6,love.graphics.getHeight()*.6,"Play","button")
-	exitB = button:new() exitB:load(love.graphics.getWidth()*.6,love.graphics.getHeight()*.7,"Exit","button")
+	playB = button:new() playB:load(love.graphics.getWidth()*.5,love.graphics.getHeight()*.6,"Play","button")
+	exitB = button:new() exitB:load(love.graphics.getWidth()*.1,love.graphics.getHeight()*.3,"Exit","button")
 end
 
 function state:close()
@@ -31,6 +31,7 @@ function state:update(dt)
 end
 
 function state:draw()
+	love.graphics.setBackgroundColor(20,20,20)
 	love.graphics.draw(getImage("lief"),love.graphics.getWidth()*.75,100)
 	playB:draw()
 	exitB:draw()
