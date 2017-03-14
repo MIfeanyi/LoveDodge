@@ -5,10 +5,16 @@ local world = bump.newWorld()
 
 function filter(item,other)
   if item.id == "bullet" and other.id =="bullet"  then
-    return 'bounce'
+    return 'cross'
   end
-  if item.id == "bullet" and other.id=="player" then
-    return 'bounce'
+  if item.id=="bullet" and other.id=="powerup" or item.id=="powerup" and other.id=="bullet" then
+    return 'cross'
+  end
+  if item.id=="bullet" and other.id=="blaster" or item.id=="blaster" and other.id=="bullet" then
+    return 'cross'
+  end
+  if item.id == "bullet" and other.id=="player" or item.id == "player" and other.id=="bullet" then
+    return 'cross'
   end
   return 'slide'
 end
