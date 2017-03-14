@@ -9,7 +9,8 @@ health = {
     dmg=20,
     x=0,y=30,
     w=400,
-    h=30
+    h=30,
+    alive = true
 }
 
 function score:add()
@@ -23,14 +24,19 @@ function save()
 end
 
 function health:damage()
-    if (self.curH - self.dmg) < 0 then
-        self.curH= self.curH - self.dmg
+    if (self.curH - self.dmg) > 0 then
+        self.curH = self.curH - self.dmg
+    else
+        self.curH = 0
+        self.alive = false
     end
 end
 
 function health:draw()
     percent = (self.curH/self.maxH)*self.w
     love.graphics.setColor(255,0,0,255)
-    love.graphics.rectangle("fill",self.x,self.y,percent,self.h)
+    if percent > 0 then
+        love.graphics.rectangle("fill",self.x,self.y,percent,self.h)
+    end
     love.graphics.setColor(255,255,255,255)
 end

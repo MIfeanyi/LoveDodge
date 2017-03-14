@@ -15,7 +15,7 @@ physics = {
     decay = 5}
 
 function state:new()
-	return lovelyMoon.new(self)
+    return lovelyMoon.new(self)
 end
 
 function state:load()
@@ -40,101 +40,109 @@ function state:load()
 end
 
 function state:close()
-	
+
 end
 
 function state:enable()
-	
+
 end
 
 function state:disable()
-	
+
 end
 
 function state:update(dt)
-	player:update(dt)
-    updateBullet(dt)
-    updatePU(dt)
-    --updateWorld(dt)
-    if love.keyboard.isDown('w') then
-        player.y = player.y - (physics.velocity*4*dt)
-        player.current = "jump"
-    end
-    if love.keyboard.isDown('a') then
-        player.current = "walk"
-        player.vx = player.vx - (physics.velocity/physics.decay)*dt
-    if player.direction == "right" then
-        player.direction = "left"
-        player:flipH()
-    end
-    end
-    if love.keyboard.isDown('s') then
-        player.current = "dead"
-    end
-    if love.keyboard.isDown('d') then
-        player.current = "walk"
-        player.vx = player.vx + (physics.velocity/physics.decay)*dt
-    if player.direction == "left" then
-        player.direction = "right"
-        player:flipH()
-    end
-    end
-    if love.keyboard.isDown('space') then
-        player.current = "stand"
-    end
-
-    if player.vx > physics.velocity then
-        player.vx = physics.velocity
-    elseif player.vx < (physics.velocity*-1) then
-        player.vx = (physics.velocity*-1)
-    end
-    if player.vx > 0 then
-        player.vx = player.vx - (physics.decay)*dt
-    end
-    if player.vx < 0 then
-        player.vx = player.vx + (physics.decay)*dt
-    end
-    --if player.vx < 0 and player.vx < 0.5 then end
-
-    player.x = player.x + player.vx
-    player.y = player.y + (physics.gravity-physics.decay)*dt
-
-    if player.x > love.graphics.getWidth() - player.w then 
-        player.x = love.graphics.getWidth()
-    end
-    if player.x < 1 then
-        player.x = 1
-    end
-
-    if player.y > love.graphics.getHeight() - player.h then 
-        if player.y > love.graphics.getHeight() then
+    if player.alive==true and health.curH > 0 then
+        player:update(dt)
+        updateBullet(dt)
+        updatePU(dt)
+        --updateWorld(dt)
+        if love.keyboard.isDown('w') then
+            player.y = player.y - (physics.velocity*4*dt)
+            player.current = "jump"
         end
-        player.y = love.graphics.getHeight()
+        if love.keyboard.isDown('a') then
+            player.current = "walk"
+            player.vx = player.vx - (physics.velocity/physics.decay)*dt
+            if player.direction == "right" then
+                player.direction = "left"
+                player:flipH()
+            end
+        end
+        if love.keyboard.isDown('s') then
+            player.current = "dead"
+        end
+        if love.keyboard.isDown('d') then
+            player.current = "walk"
+            player.vx = player.vx + (physics.velocity/physics.decay)*dt
+            if player.direction == "left" then
+                player.direction = "right"
+                player:flipH()
+            end
+        end
+        if love.keyboard.isDown('space') then
+            player.current = "stand"
+        end
+
+        if player.vx > physics.velocity then
+            player.vx = physics.velocity
+        elseif player.vx < (physics.velocity*-1) then
+            player.vx = (physics.velocity*-1)
+        end
+        if player.vx > 0 then
+            player.vx = player.vx - (physics.decay)*dt
+        end
+        if player.vx < 0 then
+            player.vx = player.vx + (physics.decay)*dt
+        end
+        --if player.vx < 0 and player.vx < 0.5 then end
+
+        player.x = player.x + player.vx
+        player.y = player.y + (physics.gravity-physics.decay)*dt
+
+        if player.x > love.graphics.getWidth() - player.w then
+            player.x = love.graphics.getWidth() - player.w
+        end
+        if player.x < 1 then
+            player.x = 1
+        end
+
+        if player.y > love.graphics.getHeight() - player.h then
+            if player.y > love.graphics.getHeight() then
+            end
+            player.y = love.graphics.getHeight()
+        end
+        player.x, player.y=playerCollisions(move(player))
+    else
+        --game over
     end
-    player.x, player.y=playerCollisions(move(player))
 end
 
 function state:draw()
-    --love.graphics.setColor(20,20,20)
+    love.graphics.setColor(20,20,20)
     love.graphics.rectangle("fill",0,0,love.graphics.getWidth(),40)
-    --love.graphics.setColor(255,255,255)
+    love.graphics.setColor(255,255,255,255)
     love.graphics.draw(getImage("bgd"))
     drawBases()
-	player:draw()
+    player:draw()
     drawBullet()
     drawPU()
     love.graphics.draw(getImage("uiback"),0,0)
     love.graphics.draw(getImage("ui-gun"),love.graphics.getWidth()-64,0)
     love.graphics.print("Score:",0,0)
     love.graphics.print(score.points,80,0)
-    health:draw()
-    love.graphics.draw(getImage("ui-mouse"),love.mouse.getX()-32,love.mouse.getY()-32)
-    if  player.alive ==false then
-        love.graphics.print("DEAD",0,200)
-    end
     if player.pu == true then
         love.graphics.draw(getImage("powerup"),love.graphics.getWidth()-64*2,16)
     end
+    health:draw()
+    if  player.alive ==false or health.curH <= 0 then
+        love.graphics.print("DEAD",0,200)
+        love.graphics.setColor(20,20,20)
+        love.graphics.rectangle("fill",0,love.graphics.getHeight()/2,love.graphics.getWidth(),200)
+        love.graphics.setColor(255,255,255,255)    
+        love.graphics.print("DEAD",0,200)
+    end
+    love.graphics.draw(getImage("ui-mouse"),love.mouse.getX()-32,love.mouse.getY()-32)
 end
 
 function state:keypressed(key, unicode)
