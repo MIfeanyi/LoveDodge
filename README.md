@@ -18,7 +18,7 @@ This game was built with [LOVE 2D](https://www.love2d.org/). The releases only c
 * [30log](https://github.com/Yonaba/30log)
 
 ## Usage
-* In main.lua functions `love.update(), love.draw(),etc...` all direct to LovelyMoon to manage the states. All states are under `lib`. template.lua will show you all available functions.
+* In main.lua functions `love.update(), love.draw(),etc...` all direct to LovelyMoon to manage the states. All states are under `states`. template.lua will show you all available functions.
 ## Software License
 This project is under [GPL 3.0](https://github.com/MIfeanyi/LoveDodge/blob/master/LICENSE)
 * See libraries for their specific licenses.
