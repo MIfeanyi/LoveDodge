@@ -16,7 +16,7 @@ function addBullet()
 end
 
 function bulletCollision(actualX, actualY, cols, len)
-    for i=1,len do -- If more than one simultaneous collision, they are sorted out by proximity
+    for i=1,len do
         local col = cols[i]
         if col.other.id =="player" or col.other.id =="blaster" then
             col.item.alive = false
@@ -51,7 +51,7 @@ function updateBullet(dt)
         b.x,b.y=bulletCollision(move(b))
         if b ~= nil then
             if b.y > love.graphics.getHeight()+32 or not b.alive or b.life > bTimer.life then
-                removeObject(b) --review bump.lua
+                removeObject(b) 
                 table.remove(bullets, i)
             end
         end
