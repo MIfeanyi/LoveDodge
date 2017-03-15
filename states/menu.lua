@@ -10,8 +10,9 @@ end
 function state:load()
 	addImage("/gfx/button.png","button")
 	addImage("/gfx/menu/Lief.png","lief")
-	playB = button:new() playB:load(love.graphics.getWidth()*.5,love.graphics.getHeight()*.6,"Play","button")
-	exitB = button:new() exitB:load(love.graphics.getWidth()*.5,love.graphics.getHeight()*.4,"Exit","button")
+	playB = button:new() 
+	playB:load(love.graphics.getWidth()*.2,love.graphics.getHeight()*.45,"Play","button")
+	quitB = button:new() quitB:load(love.graphics.getWidth()*.2,love.graphics.getHeight()*.60,"Exit","button")
 end
 
 function state:close()
@@ -30,7 +31,7 @@ function state:update(dt)
 	if playB:clicked() then
 		lovelyMoon.switchState("menu","game")
 	end
-	if exitB:clicked() then
+	if love.keyboard.isDown('escape') or quitB:clicked() then
 		love.event.quit()
 	end
 end
@@ -39,7 +40,8 @@ function state:draw()
 	love.graphics.setBackgroundColor(20,20,20)
 	love.graphics.draw(getImage("lief"),love.graphics.getWidth()*.75,100)
 	playB:draw()
-	exitB:draw()
+	quitB:draw()
+	love.graphics.print("Credits: Michael Redford 2017",20,500)
 end
 
 function state:keypressed(key, unicode)

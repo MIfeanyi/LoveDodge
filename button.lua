@@ -40,6 +40,6 @@ function button:hover()
 end
 
 function button:draw()
-  love.graphics.draw(getImage(self.id), self.x, self.y)  
+  love.graphics.draw(getImage(self.id), self.x, self.y)
   love.graphics.print(self.text,self.x+padding,self.y+self.h*.3)
 end
