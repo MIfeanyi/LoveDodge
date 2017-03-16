@@ -29,7 +29,7 @@ function state:load()
     addSound("/sfx/lose.wav","lose")
     addSound("/sfx/powerup.wav","powerup") 
     addMusic("/sfx/music/Dark Sanctum.mp3","game")
-    getSound("shoot"):setVolume(1)
+    getSound("shoot"):setVolume(3)
 
     addImage("/gfx/uibackground.png","uiback")
     addImage("/gfx/powerup.png","powerup")
