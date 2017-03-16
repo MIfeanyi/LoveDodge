@@ -44,7 +44,9 @@ function state:load()
 end
 
 function state:close()
-
+    player:reset()
+    resetBullet()
+    health:reset()
 end
 
 function state:enable()
@@ -60,7 +62,9 @@ function state:update(dt)
         player:update(dt)
         updateBullet(dt)
         updatePU(dt)
-        --updateWorld(dt)
+        if love.mouse.isDown(1) then
+            player:addBullet(love.mouse.getX(),love.mouse.getY())
+        end
         if love.keyboard.isDown('w') then
             player.y = player.y - (physics.velocity*4*dt)
             player.current = "jump"
@@ -121,7 +125,7 @@ function state:update(dt)
         if restartB:clicked() then
         player:reset()
         resetBullet()
-        
+        health:reset()
         lovelyMoon.switchState("game", "menu") -- direct back to the menu
             --reload
         end
@@ -168,7 +172,7 @@ end
 
 function state:mousepressed(x, y, button)
     if button == 1 then
-        player:addBullet(x,y)
+        
     end
 end
 
