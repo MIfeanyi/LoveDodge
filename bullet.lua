@@ -21,6 +21,9 @@ function bulletCollision(actualX, actualY, cols, len)
         if col.other.id =="player" or col.other.id =="blaster" then
             col.item.alive = false
             score:add()
+            if col.other.id=="player" then
+                player.alive =false
+            end
         end
         if col.other.id =="floor" or col.item.id=="floor" then
             col.item.alive = false
@@ -56,6 +59,15 @@ function updateBullet(dt)
             end
         end
     end
+end
+
+function resetBullet()
+    for i, b in ipairs(bullets) do
+        removeObject(b)
+        table.remove(bullets,i)
+    end
+    bTimer.wave = 1
+    bTimer.current = 0
 end
 
 function drawBullet()
