@@ -2,7 +2,7 @@ local state = {}
 
 require 'image'
 require 'button'
-
+require 'sound'
 function state:new()
 	return lovelyMoon.new(self)
 end
@@ -10,13 +10,14 @@ end
 function state:load()
 	addImage("/gfx/button.png","button")
 	addImage("/gfx/menu/Lief.png","lief")
-	playB = button:new() 
-	playB:load(love.graphics.getWidth()*.2,love.graphics.getHeight()*.45,"Play","button")
+	addMusic("/sfx/music/Title Theme.mp3","title")
+	
+	playB = button:new() playB:load(love.graphics.getWidth()*.2,love.graphics.getHeight()*.45,"Play","button")
 	quitB = button:new() quitB:load(love.graphics.getWidth()*.2,love.graphics.getHeight()*.60,"Exit","button")
+	love.audio.play(getSound("title"))
 end
 
 function state:close()
-	
 end
 
 function state:enable()
@@ -29,6 +30,7 @@ end
 
 function state:update(dt)
 	if playB:clicked() then
+		love.audio.stop(getSound("title"))
 		lovelyMoon.switchState("menu","game")
 	end
 	if love.keyboard.isDown('escape') or quitB:clicked() then

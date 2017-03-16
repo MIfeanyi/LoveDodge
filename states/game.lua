@@ -1,5 +1,6 @@
 local state = {}
 require 'score'
+require 'sound'
 require 'world'
 require 'button'
 require 'animation'
@@ -23,6 +24,12 @@ function state:load()
     addImage("/gfx/button.png","button")
     restartB =  button:new() restartB:load(200,love.graphics.getHeight()*.75,"restart","button")
     exitB = button:new() exitB:load(0,love.graphics.getHeight()*.75,"exit","button")
+
+    addSound("/sfx/shoot.wav","shoot")
+    addSound("/sfx/lose.wav","lose")
+    addSound("/sfx/powerup.wav","powerup") 
+    addMusic("/sfx/music/Dark Sanctum.mp3","game")
+
     addImage("/gfx/uibackground.png","uiback")
     addImage("/gfx/powerup.png","powerup")
     addImage("/gfx/blast.png","blast")
@@ -35,12 +42,15 @@ function state:load()
     addImage("/gfx/plat-idle.png","stand")
     addImage("/gfx/plat-jump.png","jump")
     addImage("/gfx/plat-walk.png","walk")
+
     player:addAnimation(addAnimation(32,32,'1-1',"dead",1))
     player:addAnimation(addAnimation(32,32,'1-2',"stand",1.5))
     player:addAnimation(addAnimation(32,32,'1-2',"jump",.3))
     player:addAnimation(addAnimation(32,32,'1-6',"walk",.3))
+
     addObject(physics.floor)
     addObject(player)
+    love.audio.play(getSound("game"))
 end
 
 function state:close()
@@ -121,17 +131,15 @@ function state:update(dt)
         end
         player.x, player.y=playerCollisions(move(player))
     else
-        --game over
         if restartB:clicked() then
         player:reset()
         resetBullet()
         health:reset()
-        lovelyMoon.switchState("game", "menu") -- direct back to the menu
-            --reload
+        love.audio.stop(getSound("game"))
+        lovelyMoon.switchState("game", "menu") 
         end
         if exitB:clicked() then
             love.event.quit()
-            --exit
         end
     end
 end
