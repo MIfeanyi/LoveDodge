@@ -11,7 +11,9 @@ player= {
 }
 
 local bullets = {}
-local bTimer = {max=.05,current=0,canShoot=true,maxLife=5}
+local bTimer = {max=.20,current=0,canShoot=true,maxLife=5}
+
+local pTimer = {max=10,current=10,activated=false}
 
 function player:addAnimation(animation)
     a = animation
@@ -20,7 +22,14 @@ end
 
 function player:update(dt)
     bTimer.current = bTimer.current + dt
-    if bTimer.current > bTimer.max then
+    if pTimer.activated == true then
+        pTimer.current = pTimer.current - dt
+        if pTimer.current <= 0 then
+            pTimer.current = pTimer.max
+            pTimer.activated = false
+        end
+    end
+    if bTimer.current > bTimer.max  or pTimer.activated then
         bTimer.current = 0
         bTimer.canShoot = true
     end
@@ -69,6 +78,7 @@ function player:reset()
     end
     self.x = 0
     self.y = 0
+    self.pu = false
 end
 
 function player:addBullet(x,y)
@@ -118,4 +128,11 @@ function playerCollisions(actualX, actualY, cols, len)
   end
 
   return actualX, actualY
+end
+
+function player:usePU()
+    if self.pu then
+        self.pu = false
+        pTimer.activated = true
+    end
 end
