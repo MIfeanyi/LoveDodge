@@ -27,3 +27,8 @@ This project is under [GPL 3.0](https://github.com/MIfeanyi/LoveDodge/blob/maste
 You are free to:
 * Share — copy and redistribute the material in any medium or format
 * Adapt — remix, transform, and build upon the material
+
+## Music License
+Creator: [Stuck East](https://stuckeast.itch.io/songs-from-an-unmade-world)
+* [Creative Commons Attribution 3.0 Unported](https://creativecommons.org/licenses/by/3.0/)
+* [Website](http://visager.us/)
