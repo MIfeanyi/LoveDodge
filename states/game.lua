@@ -29,6 +29,7 @@ function state:load()
     addSound("/sfx/lose.wav","lose")
     addSound("/sfx/powerup.wav","powerup") 
     addMusic("/sfx/music/Dark Sanctum.mp3","game")
+    getSound("shoot"):setVolume(1)
 
     addImage("/gfx/uibackground.png","uiback")
     addImage("/gfx/powerup.png","powerup")
@@ -50,7 +51,6 @@ function state:load()
 
     addObject(physics.floor)
     addObject(player)
-    love.audio.play(getSound("game"))
 end
 
 function state:close()
@@ -69,11 +69,13 @@ end
 
 function state:update(dt)
     if player.alive==true and health.curH > 0 then
+        love.audio.play(getSound("game"))
         player:update(dt)
         updateBullet(dt)
         updatePU(dt)
         if love.mouse.isDown(1) then
             player:addBullet(love.mouse.getX(),love.mouse.getY())
+            love.audio.play(getSound("shoot"))
         end
         if love.keyboard.isDown('w') then
             player.y = player.y - (physics.velocity*4*dt)
@@ -100,6 +102,7 @@ function state:update(dt)
         end
         if love.keyboard.isDown('space') then
             player.current = "stand"
+            player:usePU()
         end
 
         if player.vx > physics.velocity then
@@ -131,12 +134,14 @@ function state:update(dt)
         end
         player.x, player.y=playerCollisions(move(player))
     else
-        if restartB:clicked() then
-        player:reset()
-        resetBullet()
-        health:reset()
         love.audio.stop(getSound("game"))
-        lovelyMoon.switchState("game", "menu") 
+        if restartB:clicked() then
+            love.audio.play(getSound("lose"))
+            player:reset()
+            resetBullet()
+            health:reset()
+            love.audio.stop(getSound("game"))
+            lovelyMoon.switchState("game", "menu") 
         end
         if exitB:clicked() then
             love.event.quit()
@@ -179,9 +184,6 @@ function state:keyreleased(key, unicode)
 end
 
 function state:mousepressed(x, y, button)
-    if button == 1 then
-        
-    end
 end
 
 function state:mousereleased(x, y, button)
