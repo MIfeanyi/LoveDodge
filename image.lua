@@ -1,5 +1,3 @@
---Image manager
---Goal reuse images without using too much memory
 images ={}
 
 function addImage(src,id)
