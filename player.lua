@@ -61,6 +61,16 @@ function player:flipV()
         end
 end
 
+function player:reset()
+    self.alive = true
+    for i, b in ipairs(bullets) do
+        removeObject(b)
+        table.remove(bullets,i)
+    end
+    self.x = 0
+    self.y = 0
+end
+
 function player:addBullet(x,y)
     if bTimer.canShoot then
         newB = {x=self.x,

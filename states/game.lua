@@ -99,7 +99,6 @@ function state:update(dt)
         if player.vx < 0 then
             player.vx = player.vx + (physics.decay)*dt
         end
-        --if player.vx < 0 and player.vx < 0.5 then end
 
         player.x = player.x + player.vx
         player.y = player.y + (physics.gravity-physics.decay)*dt
@@ -120,6 +119,9 @@ function state:update(dt)
     else
         --game over
         if restartB:clicked() then
+        player:reset()
+        resetBullet()
+        
         lovelyMoon.switchState("game", "menu") -- direct back to the menu
             --reload
         end
