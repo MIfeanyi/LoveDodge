@@ -140,6 +140,7 @@ function state:update(dt)
             player:reset()
             resetBullet()
             health:reset()
+            state:close()
             love.audio.stop(getSound("game"))
             lovelyMoon.switchState("game", "menu") 
         end
