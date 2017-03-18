@@ -1,4 +1,4 @@
-local padding = 5
+local padding = 16
 button = class("button",{
     pressed = false,x,y,h,w,img,id,text="button", maxTime = 0.20, waitTime})
 function button:init(x,y,h,w)

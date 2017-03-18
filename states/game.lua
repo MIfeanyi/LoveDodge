@@ -26,11 +26,10 @@ function state:load()
     restartB =  button:new() restartB:load(200,love.graphics.getHeight()*.75,"restart","button")
     exitB = button:new() exitB:load(0,love.graphics.getHeight()*.75,"exit","button")
 
-    addSound("/sfx/shoot.wav","shoot")
+    addSound("/sfx/shoot.wav","shoot") getSound("shoot"):setVolume(3)
     addSound("/sfx/lose.wav","lose")
     addSound("/sfx/powerup.wav","powerup") 
-    addMusic("/sfx/music/Dark Sanctum.mp3","game")
-    getSound("shoot"):setVolume(3)
+    addMusic("/sfx/music/Dark Sanctum.mp3","game") getSound("game"):setVolume(.6)
 
     addImage("/gfx/uibackground.png","uiback")
     addImage("/gfx/powerup.png","powerup")
@@ -102,7 +101,6 @@ function state:update(dt)
             end
         end
         if love.keyboard.isDown('space') then
-            player.current = "stand"
             player:usePU()
         end
 
@@ -135,6 +133,7 @@ function state:update(dt)
         end
         player.x, player.y=playerCollisions(move(player))
     else
+        player.current="dead"
         score:update(dt)
         love.audio.stop(getSound("game"))
         if restartB:clicked() then
@@ -173,7 +172,7 @@ function state:draw()
         love.graphics.setColor(20,20,20)
         love.graphics.rectangle("fill",0,love.graphics.getHeight()/2,love.graphics.getWidth(),200)
         love.graphics.setColor(255,255,255,255)    
-        love.graphics.print("DEAD",0,love.graphics.getHeight()*.60)
+        love.graphics.print("GAME OVER",200,love.graphics.getHeight()*.60)
         restartB:draw()
         exitB:draw()
         score:draw(love.graphics.getWidth()*.75,love.graphics.getHeight()*.5)

@@ -3,10 +3,9 @@ local var = {
     sx = 200,
     sy = 100,
     current =0,
-    max = 05,
+    max = 30,
     points =100
 }
-
 
 function addPU()
     newPU = {
