@@ -21,6 +21,7 @@ function state:new()
 end
 
 function state:load()
+    score:load()
     addImage("/gfx/button.png","button")
     restartB =  button:new() restartB:load(200,love.graphics.getHeight()*.75,"restart","button")
     exitB = button:new() exitB:load(0,love.graphics.getHeight()*.75,"exit","button")
@@ -134,6 +135,7 @@ function state:update(dt)
         end
         player.x, player.y=playerCollisions(move(player))
     else
+        score:update(dt)
         love.audio.stop(getSound("game"))
         if restartB:clicked() then
             love.audio.play(getSound("lose"))
@@ -174,6 +176,7 @@ function state:draw()
         love.graphics.print("DEAD",0,love.graphics.getHeight()*.60)
         restartB:draw()
         exitB:draw()
+        score:draw(love.graphics.getWidth()*.75,love.graphics.getHeight()*.5)
     end
     love.graphics.draw(getImage("ui-mouse"),love.mouse.getX()-32,love.mouse.getY()-32)
 end

@@ -1,6 +1,9 @@
+require 'lib.sick'
+
 score = {
     points=0,
-    hiscore=0
+    hiscore=0,
+    max=5
 }
 
 health = {
@@ -13,14 +16,37 @@ health = {
     alive = true
 }
 
+local sTimer = {max=.5,current=0,score=0,done=false}
+
 function score:add()
     self.points = self.points + 50
 end
 
-function load()
+function score:load()
+    highscore.set("highscores.txt", self.max, "player", 0)
 end
 
-function save()
+function score:save()
+    highscore.add("player", self.points)
+    highscore.save()
+end
+
+function score:update(dt)
+    sTimer.current = sTimer.current + dt
+    if sTimer.current > sTimer.max then
+        sTimer.current = 0
+        if sTimer.score < self.max then
+            sTimer.score = sTimer.score+1
+        end
+    end
+end
+
+function score:draw(x,y)
+    for i,score, name in highscore() do 
+        if i <= sTimer.score then
+            love.graphics.print(score, x, y+ i * 20)
+        end
+    end
 end
 
 function health:damage()
@@ -42,6 +68,9 @@ function health:draw()
 end
 
 function health:reset()
+    score:save()
     self.curH = self.maxH
     score.points = 0
+    sTimer.score = 0
+    sTimer.current = 0
 end
