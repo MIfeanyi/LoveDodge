@@ -16,6 +16,7 @@ This game was built with [LOVE 2D](https://www.love2d.org/). The releases only c
 * [anim8](https://github.com/kikito/anim8)
 * [bump.lua](https://github.com/kikito/bump.lua/)
 * [30log](https://github.com/Yonaba/30log)
+* [SICK](https://love2d.org/wiki/SICK) The link on the Love wiki seems to be broken. I was able to find version 2.0 via this [project](https://raw.githubusercontent.com/Ryuho/Lua-LOVE/master/tetris/sick.lua)
 
 ## Usage
 * In main.lua functions `love.update(), love.draw(),etc...` all direct to LovelyMoon to manage the states. All states are under `states`. template.lua will show you all available functions.
