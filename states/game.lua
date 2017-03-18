@@ -1,6 +1,6 @@
 local state = {}
-require 'score'
 require 'sound'
+require 'score'
 require 'world'
 require 'button'
 require 'animation'
@@ -29,7 +29,7 @@ function state:load()
     addSound("/sfx/shoot.wav","shoot") getSound("shoot"):setVolume(3)
     addSound("/sfx/lose.wav","lose")
     addSound("/sfx/powerup.wav","powerup") 
-    addMusic("/sfx/music/Dark Sanctum.mp3","game") getSound("game"):setVolume(.6)
+    addMusic("/sfx/music/Dark Sanctum.mp3","game") getSound("game"):setVolume(.3)
 
     addImage("/gfx/uibackground.png","uiback")
     addImage("/gfx/powerup.png","powerup")

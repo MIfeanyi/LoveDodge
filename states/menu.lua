@@ -11,7 +11,7 @@ function state:load()
 	addImage("/gfx/button.png","button")
 	addImage("/gfx/menu/Lief.png","lief")
 	addImage("/gfx/menu/instructions.png","instructions")
-	addMusic("/sfx/music/Title Theme.mp3","title")
+	addMusic("/sfx/music/Title Theme.mp3","title") getSound("title"):setVolume(.45)
 	
 	playB = button:new() playB:load(love.graphics.getWidth()*.2,love.graphics.getHeight()*.45,"Play","button")
 	quitB = button:new() quitB:load(love.graphics.getWidth()*.2,love.graphics.getHeight()*.60,"Exit","button")

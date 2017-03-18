@@ -37,6 +37,7 @@ function score:update(dt)
         sTimer.current = 0
         if sTimer.score < self.max then
             sTimer.score = sTimer.score+1
+            love.audio.play(getSound("powerup"))
         end
     end
 end
