@@ -10,6 +10,7 @@ end
 function state:load()
 	addImage("/gfx/button.png","button")
 	addImage("/gfx/menu/Lief.png","lief")
+	addImage("/gfx/menu/instructions.png","instructions")
 	addMusic("/sfx/music/Title Theme.mp3","title")
 	
 	playB = button:new() playB:load(love.graphics.getWidth()*.2,love.graphics.getHeight()*.45,"Play","button")
@@ -41,6 +42,7 @@ end
 function state:draw()
 	love.graphics.setBackgroundColor(20,20,20)
 	love.graphics.draw(getImage("lief"),love.graphics.getWidth()*.75,100)
+	love.graphics.draw(getImage("instructions"),love.graphics.getWidth()*.70,400)
 	playB:draw()
 	quitB:draw()
 	love.graphics.print("Credits: Michael Redford 2017",20,500)
