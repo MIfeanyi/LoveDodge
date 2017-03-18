@@ -1,6 +1,6 @@
 # LoveDodge
 Love2D Bullet shooter &amp;  dodge game engine: Project Leif
-This game was developed for [#ResistJam](https://itch.io/jam/resistjam)
+This game was developed for [#LinuxGameJam17](https://itch.io/jam/linux-jam-2017)
 
 ## Team
 Code & art by [MIfeanyi](https://twitter.com/Galatic8bit). 
@@ -9,7 +9,7 @@ Code & art by [MIfeanyi](https://twitter.com/Galatic8bit).
 Actual player sprites by [@somepx](https://twitter.com/somepx).
 
 # Dependencies
-This game was built with [LOVE 2D](https://www.love2d.org/). The releases only contain the *.love file required to run. For binary packages please check [itch.io]()
+This game was built with [LOVE 2D](https://www.love2d.org/). The releases only contain the *.love file required to run. For binary packages please check [itch.io](https://mifeanyi.itch.io/project-lief)
 
 ## Libraries
 * [Lovely Moon](https://love2d.org/forums/viewtopic.php?f=5&t=38702)
