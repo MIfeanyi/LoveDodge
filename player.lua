@@ -29,7 +29,11 @@ function player:update(dt)
             pTimer.activated = false
         end
     end
-    if bTimer.current > bTimer.max  or pTimer.activated then
+    if bTimer.current > bTimer.max then
+        bTimer.current = 0
+        bTimer.canShoot = true
+    end
+    if bTimer.current > bTimer.max/2  and pTimer.activated then
         bTimer.current = 0
         bTimer.canShoot = true
     end
