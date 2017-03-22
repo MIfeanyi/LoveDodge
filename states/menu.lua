@@ -31,6 +31,7 @@ function state:disable()
 end
 
 function state:update(dt)
+	love.mouse.setVisible(true)
 	if playB:clicked() then
 		love.audio.stop(getSound("title"))
 		lovelyMoon.switchState("menu","game")
