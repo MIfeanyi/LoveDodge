@@ -68,6 +68,7 @@ function state:disable()
 end
 
 function state:update(dt)
+    love.mouse.setVisible(false)
     if player.alive==true and health.curH > 0 then
         love.audio.play(getSound("game"))
         player:update(dt)
@@ -146,6 +147,7 @@ function state:update(dt)
             lovelyMoon.switchState("game", "menu") 
         end
         if exitB:clicked() then
+            health:reset()
             love.event.quit()
         end
     end
