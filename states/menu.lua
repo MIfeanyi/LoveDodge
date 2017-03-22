@@ -42,7 +42,7 @@ end
 
 function state:draw()
 	love.graphics.setBackgroundColor(20,20,20)
-  love.graphics.draw(getImage("title"),love.graphics.getWidth()*.25,100)
+	love.graphics.draw(getImage("title"),love.graphics.getWidth()*.25,100)
 	love.graphics.draw(getImage("lief"),love.graphics.getWidth()*.75,100)
 	love.graphics.draw(getImage("instructions"),love.graphics.getWidth()*.70,400)
 	playB:draw()

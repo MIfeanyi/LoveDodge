@@ -1,6 +1,8 @@
 --Source code under GPL 3.0 License
 --Copyright 2017 Michael Redford
-
+local game ={
+	version = 1.0.1
+}
 class = require 'lib.30log'
 -- DOCs: https://love2d.org/forums/viewtopic.php?f=5&t=38702
 lovelyMoon = require("lib.lovelyMoon")
