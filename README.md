@@ -1,5 +1,5 @@
 # LoveDodge
-Love2D Bullet shooter &amp;  dodge game engine: Project Leif
+Love2D Bullet shooter &amp;  dodge game engine: Project Lief
 This game was developed for [#LinuxGameJam17](https://itch.io/jam/linux-jam-2017)
 
 ## Team
